@@ -1,0 +1,23 @@
+{
+    "short_name": "EcoAquatic",
+    "name": "EcoAquatic - Fish Species Tracking and Conservation",
+    "description": "EcoAquatic is a web application for tracking global fish species in real-time, providing detailed information on conservation status, habitats, and environmental threats.",
+    "icons": [
+      {
+        "src": "/icons/icon-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/icons/icon-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#1e90ff",
+    "background_color": "#ffffff",
+    "orientation": "portrait-primary"
+  }
+  
