@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SpeciesProfilePage = () => {
+const SpeciesProfilesPage = () => {
   return (
     <div>
       <h1>Species Profile Page</h1>
@@ -8,4 +8,4 @@ const SpeciesProfilePage = () => {
   );
 }
 
-export default SpeciesProfilePage;
+export default SpeciesProfilesPage;
