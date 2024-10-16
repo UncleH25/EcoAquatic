@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="header-container">
       <div className="logo">
-        <img src="public/images/logos/EcoAquatic_LogoMain.png" alt="ECOAQUATIC Logo" />
+        <img src="../images/logos/EcoAquatic_LogoMain.png" alt="ECOAQUATIC Logo" />
       </div>
       <nav className="nav-links">
         <Link to="/home" className="nav-item">Home</Link>
@@ -16,7 +16,7 @@ const Header = () => {
         <Link to="/interactive-map" className="nav-item">Interactive Map</Link>
       </nav>
       <div className="user-icon">
-        <img src="" alt="User" />
+        <Link to="/user-preferences" className="nav-item"><img src="" alt="User" /></Link>
       </div>
     </header>
   );
