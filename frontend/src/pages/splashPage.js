@@ -1,12 +1,11 @@
 import React from 'react';
-import { useEffect } from 'react';
 import Footer from '../components/layout/footer'; // Common Footer
 import '../styles/splash.css';  // CSS for splash screen
 
 const SplashScreen = () => {
   const navigateToMain = () => {
     // Navigation logic to route to your main page
-    window.location.href = "/home";  // or use useNavigate() from 'react-router-dom'
+    window.location.href = "/login";  // or use useNavigate() from 'react-router-dom'
   };
 
   return (

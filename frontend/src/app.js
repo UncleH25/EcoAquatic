@@ -17,10 +17,10 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={<SplashPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
       <Route element={<MainLayout />}>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/species-search" element={<SpeciesSearchPage />} />
           <Route path="/species-profiles" element={<SpeciesProfilesPage />} />
