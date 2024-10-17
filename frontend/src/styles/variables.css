@@ -1,0 +1,9 @@
+/* Variable Styles */
+
+:root {
+    --primary-color: #133968; /* Dark blue */
+    --secondary-color: #8DA9C4; /* Light blue */
+    --text-color: #FCFEFE;
+    --background-color: #133968;
+    --font-family: 'Roboto', sans-serif;
+  }

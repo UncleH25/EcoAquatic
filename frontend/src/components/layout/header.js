@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/global.css';
+import '../../styles/variables.css';
 
 const Header = () => {
   return (
     <header className="header-container">
+      <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'></link>
       <div className="logo">
         <img src="../images/logos/EcoAquatic_LogoMain.png" alt="ECOAQUATIC Logo" />
       </div>
