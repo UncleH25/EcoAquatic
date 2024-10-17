@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import Footer from '../components/layout/footer';
 import '../styles/login.css';
+import Button from '../components/common/button';
+import Input from '../components/common/input';
+import Form from '../components/common/form';
+import Checkbox from '../components/common/checkbox';
+
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -9,7 +14,7 @@ function LoginPage() {
 
   const navigateToMain = () => {
     // Navigation logic to route to your main page
-    window.location.href = "/home";  // or use useNavigate() from 'react-router-dom'
+    window.location.href = "/home"; // or use useNavigate() from 'react-router-dom'
   };
 
   const handleSubmit = (e) => {
@@ -22,49 +27,42 @@ function LoginPage() {
     <>
       <header className="login-header">
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'></link>
-          <div className="login-logo">
-            <img src="../images/logos/EcoAquatic_LogoMain.png" alt="EcoAquatic Logo" />
-          </div>
-        </header>
+        <div className="login-logo">
+          <img src="../images/logos/EcoAquatic_LogoMain.png" alt="EcoAquatic Logo" />
+        </div>
+      </header>
       <div className="page-container">
-      <form  className="login-form" onSubmit={handleSubmit}>
-        <h1 className="title">WELCOME BACK!</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="input"
-        />
-        <input
-          type="password"
-          placeholder="Enter Your Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="input"
-        />
-        <div className="checkbox-container">
-          <input
-            type="checkbox"
+        <Form onSubmit={handleSubmit}>
+          <h1 className="title">WELCOME BACK!</h1>
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Enter Your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Checkbox
             id="rememberMe"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
           />
-          <label htmlFor="rememberMe" className='remember-label'>Remember Me</label>
-          <a href="/forgot-password" className="forgot-password">Forgot Password?</a>
-        </div>
-        <button type="submit" onClick={navigateToMain} className="button primary">Login</button>
-        <div className="or-with">Or With</div>
-        <button type="button" className="button">Login with an Institute</button>
-        <div className="signup-link">
-          Don't have an account? <a href="/signup">Sign Up</a>
-        </div>
-      </form>
-    </div>
-    <Footer /> {/* Common Footer */}
-    </>   
+          <Button type="submit" onClick={navigateToMain} className="button primary">Login</Button>
+          <div className="or-with">Or With</div>
+          <Button type="button" className="button">Login with an Institute</Button>
+          <div className="signup-link">
+            Don't have an account? <a href="/signup">Sign Up</a>
+          </div>
+        </Form>
+      </div>
+      <Footer /> {/* Common Footer */}
+    </>
   );
 }
 

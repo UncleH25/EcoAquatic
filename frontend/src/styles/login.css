@@ -2,8 +2,7 @@ body {
   font-family: var(--font-family);
   margin: 0;
   padding: 0;
-  overflow-y: hidden;
-  background-color: rgba(141, 169, 196, 0.2); /* Add this line */
+  overflow-y: hidden; /* Add this line */
 }
 
 .login-header {
@@ -13,27 +12,34 @@ body {
   align-items: center;
   padding: 15px 0;
   height: 100px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: fixed; /* Add this line */
+  top: 0; /* Add this line */
+  left: 0; /* Add this line */
+  width: 100%; /* Add this line */
 }
 
 .login-logo img {
   max-width: 120px; /* Adjust the size of the logo */
   max-height: 120px;
 }
+.login-form {
+  background-color: var(--secondary-color);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 25%;  /* Changed from 300px to 100% */
+  opacity: 0.8;
+}
 
 .page-container {
   background-image: url('../../public/images/backgrounds/loginPage_passwordResetPage_bg.png');
   background-size: cover;
   background-position: center;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 100px); /* Adjust the height to account for the fixed header */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 5vh;
-  margin-top: 100px;
+  margin-top: 100px; /* Add this line */
 }
 
 .title {
@@ -42,6 +48,7 @@ body {
   margin-bottom: 1rem;
   text-align: center;
   font-size: 3rem;
+  opacity: 100%;
 }
 
 .input {
@@ -52,6 +59,7 @@ body {
   border-radius: 5px;
   background-color: #A7988C;
   border: 1px solid #204665;
+  opacity: 100%;
 }
 
 .button {
@@ -63,6 +71,7 @@ body {
   color: var(--text-color);
   cursor: pointer;
   margin-bottom: 1rem;
+  opacity: 100%;
 }
 
 .button:hover {
@@ -72,6 +81,7 @@ body {
 
 .button.primary {
   background-color: #28a745;
+  opacity: 100%;
 }
 
 .button.primary:hover {
@@ -82,32 +92,37 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  opacity: 100%;
 }
 
 .remember-label {
   color: var(--text-color);
+  opacity: 100%;
 }
 
 .forgot-password {
   color: #850002;
-  font-style: bold;
   text-decoration: none;
   margin-left: auto;
+  opacity: 100%;
 }
 
 .or-with {
   text-align: center;
   margin: 1rem 0;
   color: var(--text-color);
+  opacity: 100%;
 }
 
 .signup-link {
   text-align: center;
   margin-top: 1rem;
   color: var(--text-color);
+  opacity: 100%;
 }
 
 .signup-link a {
   color: #28a745;
   text-decoration: none;
+  opacity: 100%;
 }
