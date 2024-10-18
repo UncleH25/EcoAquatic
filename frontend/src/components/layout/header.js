@@ -18,7 +18,7 @@ const Header = () => {
         <Link to="/interactive-map" className="nav-item">Interactive Map</Link>
       </nav>
       <div className="user-icon">
-        <Link to="/user-preferences" className="nav-item"><img src="" alt="User" /></Link>
+        <Link to="/user-preferences"><img src="../images/icons/profileIcon.png" alt="User" /></Link>
       </div>
     </header>
   );

@@ -57,9 +57,16 @@ img {
 }
 
 .user-icon img {
-  width: 40px;
-  height: auto;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.user-icon {
+  background-color: transparent; /* or any other color you want */
+}
+
+.user-icon:hover {
+  background-color: transparent; /* or any other color you want */
 }
 
 /* Footer Styles */
