@@ -4,7 +4,9 @@ import MainLayout from './components/layout/mainLayout';
 import SplashPage from './pages/splashPage';
 import HomePage from './pages/homePage';
 import LoginPage from './pages/loginPage';
+import LoginInstitutionPage from './pages/loginInstitutionPage';
 import SignupPage from './pages/signupPage';
+import SignupInstitutionPage from './pages/signupInstitutionPage';
 import DashboardPage from './pages/dashboardPage';
 import SpeciesSearchPage from './pages/speciesSearchPage';
 import SpeciesProfilesPage from './pages/speciesProfilesPage';
@@ -18,7 +20,9 @@ function App() {
       <Routes>
       <Route path="/" element={<SplashPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/login-with-your-institution" element={<LoginInstitutionPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/signup-with-your-institution" element={<SignupInstitutionPage />} />
       <Route element={<MainLayout />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />

@@ -17,6 +17,11 @@ function LoginPage() {
     window.location.href = "/home"; // or use useNavigate() from 'react-router-dom'
   };
 
+  const navigateToInstitution = () => {
+    // Navigation logic to route to your main page
+    window.location.href = "/login-with-your-institution"; // or use useNavigate() from 'react-router-dom'
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
@@ -55,7 +60,7 @@ function LoginPage() {
           />
           <Button type="submit" onClick={navigateToMain} className="button primary">Login</Button>
           <div className="or-with">Or With</div>
-          <Button type="button" className="button">Login with an Institute</Button>
+          <Button type="button" onClick={navigateToInstitution} className="button">Login with an Institute</Button>
           <div className="signup-link">
             Don't have an account? <a href="/signup">Sign Up</a>
           </div>

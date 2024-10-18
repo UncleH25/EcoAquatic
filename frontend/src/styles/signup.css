@@ -1,0 +1,114 @@
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.signup-header {
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.signup-logo {
+  max-width: 120px;
+  max-height: 120px;
+  margin: 0 auto;
+}
+
+.signup-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signup-form {
+  background-color: var(--secondary-color);
+  padding: 1.5rem 2rem; /* Reduced top/bottom padding from 2rem to 1.5rem */
+  border-radius: 15px;
+  width: 70%;
+  max-width: 350px;
+  opacity: 0.9;
+  margin: 0 auto;
+  margin-top: 100px; /* Keep this as it looks natural now */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.signup-page-container {
+  background-image: url('../../public/images/backgrounds/signupPage_bg.png'); /* Correct path */
+  background-size: cover;
+  background-position: center center; /* Centered background image */
+  min-height: 100vh; /* Ensures full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 150px; /* Adding natural padding for content positioning */
+}
+
+.title {
+  color: var(--text-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem; /* Reduced bottom margin to close the gap under the title */
+  text-align: center;
+  font-size: 3rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #A7988C;
+  border: 1px solid #204665;
+  color: white;
+}
+
+.button {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #3B8C63;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.button:hover {
+  background-color: #218838;
+}
+
+.button.primary {
+  background-color: #28a745;
+}
+
+.button.primary:hover {
+  background-color: #218838;
+}
+
+.or-with {
+  text-align: center;
+  margin: 1rem 0;
+  color: white;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: white;
+}
+
+.login-link a {
+  color: #28a745;
+  text-decoration: none;
+}
