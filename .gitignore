@@ -1,0 +1,19 @@
+# ASP.NET Core specific
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node.js / React specific
+node_modules/
+build/
+dist/
+
+# General
+.DS_Store
+.env
+.vscode/
+*.log
