@@ -7,39 +7,52 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- BCrypt for Password Hashing -->
+    <!-- BCrypt for secure password hashing -->
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 
-    <!-- FluentValidation for Input Validation -->
+    <!-- FluentValidation for easy-to-use input validation -->
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 
-    <!-- JWT Authentication -->
+    <!-- JWT Bearer for token-based authentication -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
 
-     <!-- OAuth2/OpenID Connect -->
+    <!-- OAuth2/OpenID Connect for third-party authentication -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.10" />
+
+    <!-- Identity framework for user management -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+
+    <!-- JSON serialization for ASP.NET Core -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.10" />
+
+    <!-- OpenAPI (Swagger) support for ASP.NET Core -->
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
 
-    <!-- Cors for Cross Origin Resource Sharing -->
+    <!-- Cross-Origin Resource Sharing (CORS) support -->
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
 
-    <!-- SignalR for Real-Time Communication -->
+    <!-- SignalR for real-time web functionality -->
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
 
-    <!-- Entity Framework Core with PostgreSQL -->
+    <!-- Entity Framework Core ORM -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+
+    <!-- EF Core design-time tools -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+
+    <!-- Additional identity stores for EF Core -->
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.10" />
+
+    <!-- PostgreSQL provider for EF Core -->
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
 
-    <!-- Serilog for Logging -->
+    <!-- Serilog for structured logging in ASP.NET Core -->
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
 
-    <!-- Swashbuckle for Generating Interactive API Documentation for ASP.NET Core -->
+    <!-- Swagger UI for interactive API documentation -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 

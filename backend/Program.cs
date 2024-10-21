@@ -1,10 +1,40 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using EcoAquatic.Data; // Add the namespace for your Data context
+using EcoAquatic.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure JWT authentication
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
+    var key = Encoding.ASCII.GetBytes("fgPLiS9kp2JaHitYq2fHqInJt0nNmaAKKWfNbGWQ9Lkhvu69CwnfrNnHt4+rtsWr"); // Ensure this is stored securely!
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
 
 // Configure PostgreSQL connection
 builder.Services.AddEntityFrameworkNpgsql();
@@ -64,6 +94,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
 var summaries = new[]
@@ -86,6 +117,7 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+// Run the application
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
