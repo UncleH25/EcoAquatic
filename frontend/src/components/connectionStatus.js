@@ -1,27 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { getConnectionStatus } from '../services/api';
+// src/components/connectionStatus.js
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const ConnectionStatus = () => {
-  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState('Not connected');
 
-  useEffect(() => {
-    // Fetch connection status on component mount
-    const fetchMessage = async () => {
-      try {
-        const statusMessage = await getConnectionStatus();
-        setMessage(statusMessage);
-      } catch (error) {
-        console.error("Failed to fetch connection status", error);
-      }
-    };
+  const testConnection = async () => {
+    try {
+      // This is your test data for the POST request
+      const entity = { name: "Test Fish Species" };
 
-    fetchMessage();
-  }, []);
+      // Perform the POST request to the backend
+      const response = await axios.post("http://localhost:5232/api/databasetest", entity, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      // Update the status based on the successful response
+      setStatus('Connection successful: Data posted');
+      console.log('Response:', response);
+    } catch (error) {
+      // Update the status in case of an error
+      setStatus('Failed to connect');
+      console.error('Error while connecting:', error);
+    }
+  };
 
   return (
     <div>
-      <h1>Connection Status</h1>
-      <p>{message}</p>
+      <h2>Backend Connection Status</h2>
+      <p>Status: {status}</p>
+      <button onClick={testConnection}>Test Connection</button>
     </div>
   );
 };
