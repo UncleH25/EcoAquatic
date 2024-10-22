@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from "formik";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();  // Initialize the navigate hook
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -14,6 +17,9 @@ const Register = () => {
       try {
         const response = await axios.post("http://localhost:5232/api/auth/register", values);
         alert("Registration successful!");
+
+        // Redirect to login page after successful registration
+        navigate("/login");
       } catch (error) {
         console.error("Registration failed:", error);
         alert("Registration failed!");

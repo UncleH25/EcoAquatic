@@ -1,16 +1,32 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/loginPage';
 import RegisterPage from './pages/registerPage';
+import HomePage from './pages/homePage'; 
+import NotAuthorizedPage from './pages/notAuthorizedPage';
+import ProtectedRoute from './components/auth/protectedRoute';
+import AdminDashboard from './components/auth/adminDashboard';
 
-// App component
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>App</h1>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
+        
+        {/* Protect the Admin route */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/not-authorized" element={<NotAuthorizedPage />} />
+        
       </Routes>
     </BrowserRouter>
   );
