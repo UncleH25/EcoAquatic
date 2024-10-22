@@ -14,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
+        <Route path="/not-authorized" element={<NotAuthorizedPage />} />
         
         {/* Protect the Admin route */}
         <Route
@@ -24,8 +25,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/not-authorized" element={<NotAuthorizedPage />} />
         
       </Routes>
     </BrowserRouter>

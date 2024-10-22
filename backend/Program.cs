@@ -164,7 +164,7 @@ async Task SeedRoles(RoleManager<IdentityRole> roleManager, UserManager<Applicat
             Email = adminEmail,
             FullName = "Administrator"
         };
-        await userManager.CreateAsync(newAdmin, "AdminPass123!");  // Make sure to use a strong password
+        await userManager.CreateAsync(newAdmin, "AdminPass123!");  
         await userManager.AddToRoleAsync(newAdmin, "Admin");
     }
 }
