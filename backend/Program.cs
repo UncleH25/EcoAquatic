@@ -7,15 +7,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using EcoAquatic.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure JWT authentication
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-    var key = Encoding.ASCII.GetBytes("fgPLiS9kp2JaHitYq2fHqInJt0nNmaAKKWfNbGWQ9Lkhvu69CwnfrNnHt4+rtsWr"); // Ensure this is stored securely!
+    builder.Services.Configure<IdentityOptions>(options =>
+    {
+        options.Password.RequireDigit = true;  // Require at least one digit
+        options.Password.RequiredLength = 6;   // Minimum password length
+        options.Password.RequireNonAlphanumeric = false;  // Do not require special characters
+        options.Password.RequireUppercase = false;  // Do not require uppercase letters
+        options.Password.RequireLowercase = true;  // Require at least one lowercase letter
+    });
+
+
+    var key = Encoding.ASCII.GetBytes("Jwt:Key"); // Ensure this is stored securely!
 
 builder.Services.AddAuthentication(options =>
 {
@@ -70,14 +81,13 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();  // Shows detailed error messages in development
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
 
 // Use CORS
 app.UseCors("Allowfrontend");

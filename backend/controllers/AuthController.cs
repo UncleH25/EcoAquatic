@@ -24,17 +24,28 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
-       var user = new ApplicationUser
+        // Check if the email already exists
+        var existingUser = await _userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
         {
+            return BadRequest("Email is already in use.");
+        }
+
+        var user = new ApplicationUser
+        {
+            UserName = model.Email,  // Use email as the username
             Email = model.Email,
-            InstituteName = model.InstituteName,
-            FullName = model.FullName, 
-            Password = model.Password
+            FullName = model.FullName,
+            InstituteName = model.InstituteName
         };
 
+        // Register the user with Identity and hash the password
         var result = await _userManager.CreateAsync(user, model.Password);
 
-        if (!result.Succeeded) return BadRequest(result.Errors);
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
 
         return Ok(new { message = "User registered successfully" });
     }
@@ -42,26 +53,38 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.Email);
-        if (user == null) return Unauthorized();
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return Unauthorized("Invalid email or password.");
+        }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-        if (!result.Succeeded) return Unauthorized();
+        if (!result.Succeeded)
+        {
+            return Unauthorized("Invalid email or password.");
+        }
 
         var token = GenerateJwtToken(user);
-
         return Ok(new { token });
     }
 
     private string GenerateJwtToken(ApplicationUser user)
     {
-        var claims = new[] {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("InstituteName", user.InstituteName?.ToString() ?? string.Empty)
+            new Claim("FullName", user.FullName),
+            new Claim("InstituteName", user.InstituteName ?? string.Empty)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
+        var jwtKey = _configuration["Jwt:Key"];
+        if (string.IsNullOrEmpty(jwtKey))
+        {
+            throw new InvalidOperationException("Jwt key is missing from configuration");
+        } 
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(

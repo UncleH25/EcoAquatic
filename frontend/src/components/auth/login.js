@@ -1,50 +1,37 @@
 import React from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
-// Login component
 const Login = () => {
-  console.log('Login component is being rendered');
-  
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    // Handle form submission
     onSubmit: async (values) => {
-      console.log('Form is being submitted');
       try {
-        const response = await axios.post("/api/auth/login", values);
+        const response = await axios.post("http://localhost:5232/api/auth/login", values);
         localStorage.setItem("token", response.data.token);
         alert("Login successful!");
+        const decoded = jwtDecode(response.data.token);
+        console.log("Decoded token:", decoded);
       } catch (error) {
-        console.error('Login failed:', error);
+        console.error("Login failed:", error);
         alert("Login failed!");
       }
     },
   });
 
-  // Check if token is available in local storage
-  const token = localStorage.getItem("token");
-  if (token) {
-    const decoded = jwtDecode(token);
-    console.log('Decoded token:', decoded);
-  }
-
-  // Set token in axios headers
-  axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
-
-  // Render login form
   return (
     <div>
-      <h1>Login Form</h1>
+      <h1>Login</h1>
       <form onSubmit={formik.handleSubmit}>
         <input
           name="email"
+          type="email"
           onChange={formik.handleChange}
-          value={formik.values.username}
+          value={formik.values.email}
           placeholder="Email"
         />
         <input
