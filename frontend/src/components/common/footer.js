@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-left-links">
-                <p> 2024 - 2024 www.ecoaquatic.com. Last Updated: 09/09/2024</p>
+                <p> &copy; 2024 - 2024 www.ecoaquatic.com. Last Updated: 09/09/2024</p>
             </div>
             <div className="footer-right-links">
                 <ul className="footer-links">

@@ -26,6 +26,7 @@
 .logo-other {
     width: 127px;
     height: 129px;
+    border-radius: 50%; /* Rounds the corners to a circle */
 }
 
 

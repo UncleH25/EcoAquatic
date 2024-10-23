@@ -1,0 +1,76 @@
+@import 'variables.css';
+
+.splash-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Splash body for the video/image background */
+.splash-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../assets/backgrounds/splashpage_bg.png') center center / cover no-repeat;
+    /* To be replaced with video later */
+    background-attachment: fixed;
+}
+
+/* Content on top of background */
+.splash-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--text-light);
+    font-family: var(--font-family);
+    top: 10%; /* Move the content up to the top middle */
+}
+
+.splash-content h1 {
+    font-size: 5rem;
+    font-weight: bolder;
+    margin-bottom: 2rem;
+    margin-top: -8rem;
+}
+
+.splash-content h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+}
+
+.splash-content p {
+    font-size: 1.8rem;
+    margin-bottom: 4rem;
+    margin-top: -1rem;
+}
+
+.splash-content .highlight {
+    color: var(--accent-yellow);  /* Gold color for the 'conservation' text */
+}
+
+/* Styling for the explore button */
+.explore-btn {
+    background-color: var(--accent-green);
+    color: var(--text-light);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: -2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.explore-btn:hover {
+    background-color: var(--primary-green-hover);  /* Darker green on hover */
+}
+
+/* Footer specific styling */
+footer {
+    position: relative;  /* Ensure footer is displayed at the bottom */
+}
