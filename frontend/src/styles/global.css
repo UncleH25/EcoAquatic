@@ -1,5 +1,6 @@
 @import 'variables.css';
 
+/* Header Other */
 .header-other {
     width: 100vw; /* Full width of the viewport */
     height: 129px;
@@ -11,6 +12,7 @@
     margin: 0 auto; /* Remove default margin and center horizontally */
     padding: 0; /* Remove default padding */
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    font-family: var(--font-family);
 }
 
 /* Styling the logo container */
@@ -24,4 +26,55 @@
 .logo-other {
     width: 127px;
     height: 129px;
+}
+
+
+/* Footer */
+.footer {
+    background-color: var(--primary-blue);  /* The same color as your header */
+    color: var(--text-light);
+    padding: 15px 20px; /* Increased padding to add more height */
+    text-align: center;
+    border-top: 3px solid var(--accent-yellow); /* Adds a gold border at the top */
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex; /* Add display flex to make it a flex container */
+    justify-content: space-between; /* Add justify-content to space out the content */
+    font-family: var(--font-family);
+}
+
+.footer p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.footer-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Add display flex to make it a flex container */
+}
+
+.footer-links li {
+    margin-left: 20px;
+}
+
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-left-links {
+    margin-right: auto; /* Add margin-right auto to push it to the left */
+}
+
+.footer-right-links {
+    margin-left: auto; /* Add margin-left auto to push it to the right */
+    margin-right: 25px;
 }

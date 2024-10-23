@@ -25,6 +25,9 @@
   --input-bg: rgba(167, 152, 140, 0.9);  /* For form inputs over image backgrounds */
   --link-color: #33BC77;          /* Used for links and interactive text elements */
 
+  /* Font Family */
+  --font-family: 'Roboto', sans-serif;
+
   /* ==========================================================================
      Form Input Colors
      - Comprehensive color system for form elements

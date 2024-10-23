@@ -1,5 +1,8 @@
+@import 'variables.css';
+
 body {
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    font-family: var(--font-family);
 }
