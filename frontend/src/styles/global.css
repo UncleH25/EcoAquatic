@@ -1,0 +1,27 @@
+@import 'variables.css';
+
+.header-other {
+    width: 100vw; /* Full width of the viewport */
+    height: 129px;
+    background-color: var(--primary-blue); /* Dark blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-yellow); /* Yellow border */
+    margin: 0 auto; /* Remove default margin and center horizontally */
+    padding: 0; /* Remove default padding */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Styling the logo container */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling the logo */
+.logo-other {
+    width: 127px;
+    height: 129px;
+}

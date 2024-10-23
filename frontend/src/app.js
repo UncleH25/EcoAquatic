@@ -5,7 +5,7 @@ import LoginPage from './pages/loginPage';
 import RegisterPage from './pages/registerPage';
 import HomePage from './pages/homePage'; 
 import NotAuthorizedPage from './pages/notAuthorizedPage';
-import DashboardPage from './components/auth/dashboardPage';
+import DashboardPage from './pages/dashBoardPage';
 import SpeciesSearchPage from './pages/speciesSearchPage';
 import SpeciesProfilePage from './pages/speciesProfilePage';
 import UserPreferencesPage from './pages/userPreferencesPage';

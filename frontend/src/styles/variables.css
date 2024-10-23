@@ -1,0 +1,55 @@
+:root {
+  /* ==========================================================================
+     Color Palette
+     - Primary colors used throughout the application
+     - Based on the marine/aquatic theme
+     ========================================================================== */
+  
+  /* Core brand colors from the header, navigation, and main UI elements */
+  --primary-blue: #133968;        /* Used for header, footer, and primary containers */
+  --secondary-blue: #8DA9C4;      /* Used for hover states and secondary elements */
+  --accent-yellow: #EDB843;       /* Used for CTAs */
+  --secondary-yellow: #F4F17F;    /* Used for highlights, and borders */
+
+  /* Button colors */
+  --accent-green: #33BC77;          /* Used for main action buttons */
+  --primary-green-hover: #299860;   /* Hover state for primary green buttons */
+  --secondary-green: #3B8C63;       /* Lighter green - Used for secondary action buttons */
+  --secondary-green-hover: #317452; /* Hover state for secondary action buttons */
+
+  /* Text colors */
+  --text-light: #FAFCFC;          /* Main text colour */
+  --text-dark: #5D5C6A;           /* Secodary text color for input fields, forms, etc. */
+
+  /* Background and interactive element colors */
+  --input-bg: rgba(167, 152, 140, 0.9);  /* For form inputs over image backgrounds */
+  --link-color: #33BC77;          /* Used for links and interactive text elements */
+
+  /* ==========================================================================
+     Form Input Colors
+     - Comprehensive color system for form elements
+     - Includes all interactive states
+     ========================================================================== */
+
+  /* Input backgrounds for different states */
+  --input-bg-default: var(--input-bg);          /* Default input background */
+  --input-bg-hover: rgba(255, 255, 255, 1);     /* Slightly more opaque on hover */
+  --input-bg-focus: #ffffff;                     /* Fully opaque when focused */
+  --input-bg-disabled: rgba(237, 242, 247, 0.8); /* Grayed out for disabled state */
+  --input-bg-error: #fff5f5;                     /* Light red background for error state */
+  --input-bg-success: #f0fff4;                   /* Light green background for success state */
+
+  /* Input borders for different states */
+  --input-border-color: rgba(203, 213, 224, 0.5);  /* Default border color */
+  --input-border-hover: #a0aec0;                   /* Darker border on hover */
+  --input-border-focus: var(--primary-green);      /* Green border when focused */
+  --input-border-error: #fc8181;                   /* Red border for error state */
+  --input-border-success: var(--green-light);      /* Green border for success state */
+  --input-border-disabled: #edf2f7;                /* Light gray for disabled state */
+
+  /* Input label colors */
+  --label-color-default: var(--text-dark);       /* Default label color */
+  --label-color-focus: var(--primary-green);     /* Label color when input is focused */
+  --label-color-error: var(--text-error);        /* Label color for error state */
+  --label-color-disabled: var(--text-muted);     /* Label color for disabled state */
+}
