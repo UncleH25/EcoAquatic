@@ -37,7 +37,7 @@
     padding: 15px 20px; /* Increased padding to add more height */
     text-align: center;
     border-top: 3px solid var(--accent-yellow); /* Adds a gold border at the top */
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     display: flex; /* Add display flex to make it a flex container */

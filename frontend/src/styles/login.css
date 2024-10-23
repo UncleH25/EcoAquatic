@@ -6,3 +6,224 @@ body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
     font-family: var(--font-family);
 }
+
+.login-container {
+  background-image: url('../assets/backgrounds/loginpage_bg.png');
+  background-size: 100% 100vh; /* Set the background size to cover the viewport height */
+  background-position: center; /* Center the background image */
+  height: 554px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden; /* Hide any overflow */
+  overflow-y: hidden;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+  margin: 0;
+  margin-top: -50px; /* Move the form container up */
+  overflow: hidden; /* Hide any overflow */
+  overflow-y: hidden;
+}
+  
+  .login-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .input-group {
+    position: relative;
+    width: 100%;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px 5px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-color: var(--input-bg);
+    backdrop-filter: blur(4px);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .password-group .input-field {
+    padding-right: 5px;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: #204665;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+  }
+  
+  .input-error {
+    border-color: #FF0000;
+  }
+  
+  .password-group {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .password-toggle:hover {
+    color: #333;
+  }
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    color: var(--text-light);
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  
+  .forgot-password {
+    color: #850002;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .forgot-password:hover {
+    color: #bb0003;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-green);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .login-button:hover {
+    background-color: var(--primary-green-hover);
+  }
+  
+  .divider {
+    text-align: center;
+    color: var(--text-light);
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .divider::before {
+    left: 0;
+  }
+  
+  .divider::after {
+    right: 0;
+  }
+  
+  .divider span {
+    background-color: transparent;
+    padding: 0 10px;
+  }
+  
+  .institute-login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--secondary-green);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 1.5rem;
+  }
+  
+  .institute-login-button:hover {
+    background-color: var(--secondary-green-hover);
+  }
+  
+  .signup-prompt {
+    text-align: center;
+    color: white;
+    font-size: 0.875rem;
+  }
+  
+  .signup-link {
+    color: var(--link-color);
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+  
+  .signup-link:hover {
+    color: var(--primary-green-hover);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .login-form-container {
+      padding: 20px;
+    }
+  
+    .login-title {
+      font-size: 2.5rem;
+    }
+  
+    .form-options {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+  }

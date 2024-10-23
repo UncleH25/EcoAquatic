@@ -1,67 +1,143 @@
-import React from "react";
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFormik } from "formik";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import { useFormik } from 'formik';
+import { Eye, EyeOff } from 'lucide-react';
+import * as Yup from 'yup';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import '../../styles/login.css';
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required')
+});
 
 const Login = () => {
-  const navigate = useNavigate();  // Initialize the navigate hook
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: localStorage.getItem('rememberedEmail') || '',
+      password: '',
     },
+    validationSchema: LoginSchema,
     onSubmit: async (values) => {
       try {
         const response = await axios.post("http://localhost:5232/api/auth/login", values);
-        localStorage.setItem("token", response.data.token);
-        alert("Login successful!");
-
-        // Decode the token to check user roles
-        const decoded = jwtDecode(response.data.token);
-        const userRoles = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-
-        if (userRoles) {
-          // Check if the user has the "Admin" role
-          if (userRoles.includes("Admin")) {
-            console.log("Navigating to admin dashboard...");
-            navigate("/admin");  // Redirect admins to the admin dashboard
-          } else {
-            console.log("Navigating to home page...");
-            navigate("/home");   // Redirect regular users to the home page
-          }
+        const { token } = response.data;
+        
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', values.email);
         } else {
-          console.error("No roles found in the token.");
+          localStorage.removeItem('rememberedEmail');
         }
-        console.log("Decoded token:", decoded);
+
+        localStorage.setItem("token", token);
+        
+        const decoded = jwtDecode(token);
+        const userRoles = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        
+        if (userRoles?.includes("Admin")) {
+          navigate("/admin");
+        } else {
+          navigate("/home");
+        }
       } catch (error) {
         console.error("Login failed:", error);
-        alert("Login failed!");
+        formik.setErrors({
+          email: 'Invalid credentials',
+          password: 'Invalid credentials'
+        });
       }
     },
   });
 
+  const handleInstituteLogin = () => {
+    navigate('/institute-login');
+  };
+
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          placeholder="Email"
-        />
-        <input
-          name="password"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          placeholder="Password"
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-container">
+      <div className="login-form-container">
+        <h1 className="login-title">WELCOME BACK!</h1>
+        
+        <form onSubmit={formik.handleSubmit} className="login-form">
+          <div className="input-group">
+            <input
+              name="email"
+              type="email"
+              placeholder="example@gmail.com"
+              className={`input-field ${formik.touched.email && formik.errors.email ? 'input-error' : ''}`}
+              {...formik.getFieldProps('email')}
+            />
+          </div>
+
+          <div className="input-group password-group">
+            <input
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter Your Password"
+              className={`input-field ${formik.touched.password && formik.errors.password ? 'input-error' : ''}`}
+              {...formik.getFieldProps('password')}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="password-toggle"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+
+          <div className="form-options">
+            <label className="remember-me">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <span>Remember Me</span>
+            </label>
+            <button
+              type="button"
+              onClick={() => navigate('/forgot-password')}
+              className="forgot-password"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
+          <button type="submit" className="login-button">
+            Login
+          </button>
+        </form>
+
+        <div className="divider">
+          <span>Or With</span>
+        </div>
+
+        <button
+          onClick={handleInstituteLogin}
+          className="institute-login-button"
+        >
+          Login with an Institute
+        </button>
+
+        <div className="signup-prompt">
+          Don't have an account?{' '}
+          <button
+            onClick={() => navigate('/register')}
+            className="signup-link"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
