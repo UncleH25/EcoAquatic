@@ -67,17 +67,21 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
+        
+        // Check if email exists
         if (user == null)
         {
-            return Unauthorized("Invalid email or password.");
+            return BadRequest(new { error = "email", message = "Email not found" });
         }
 
+        // Check password
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
         if (!result.Succeeded)
         {
-            return Unauthorized("Invalid email or password.");
+            return BadRequest(new { error = "password", message = "Incorrect password" });
         }
 
+        // If both email and password are correct, generate token
         var token = GenerateJwtToken(user);
         return Ok(new { token });
     }

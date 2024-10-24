@@ -9,7 +9,7 @@ import '../../styles/login.css';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
+    .email('Invalid email format')
     .required('Email is required'),
   password: Yup.string()
     .required('Password is required')
@@ -19,6 +19,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [serverErrors, setServerErrors] = useState({
+    email: '',
+    password: ''
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +32,9 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
       try {
+        // Reset server errors before attempting login
+        setServerErrors({ email: '', password: '' });
+
         const response = await axios.post("http://localhost:5232/api/auth/login", values);
         const { token } = response.data;
         
@@ -49,10 +56,35 @@ const Login = () => {
         }
       } catch (error) {
         console.error("Login failed:", error);
-        formik.setErrors({
-          email: 'Invalid credentials',
-          password: 'Invalid credentials'
-        });
+        
+        if (error.response?.data) {
+          const { error: errorType, message } = error.response.data;
+          
+          // Reset both error messages first
+          setServerErrors({
+            email: '',
+            password: ''
+          });
+
+          // Set the specific error message based on the error type
+          if (errorType === 'email') {
+            setServerErrors(prev => ({
+              ...prev,
+              email: message
+            }));
+          } else if (errorType === 'password') {
+            setServerErrors(prev => ({
+              ...prev,
+              password: message
+            }));
+          } else {
+            // If the error type is not specified, show generic error
+            setServerErrors({
+              email: 'An error occurred during login',
+              password: 'An error occurred during login'
+            });
+          }
+        }
       }
     },
   });
@@ -72,9 +104,18 @@ const Login = () => {
               name="email"
               type="email"
               placeholder="example@gmail.com"
-              className={`input-field ${formik.touched.email && formik.errors.email ? 'input-error' : ''}`}
+              className={`input-field ${
+                (formik.touched.email && formik.errors.email) || serverErrors.email 
+                  ? 'input-error' 
+                  : ''
+              }`}
               {...formik.getFieldProps('email')}
             />
+            {((formik.touched.email && formik.errors.email) || serverErrors.email) && (
+              <div className="error-message">
+                {serverErrors.email || formik.errors.email}
+              </div>
+            )}
           </div>
 
           <div className="input-group password-group">
@@ -82,7 +123,11 @@ const Login = () => {
               name="password"
               type={showPassword ? 'text' : 'password'}
               placeholder="Enter Your Password"
-              className={`input-field ${formik.touched.password && formik.errors.password ? 'input-error' : ''}`}
+              className={`input-field ${
+                (formik.touched.password && formik.errors.password) || serverErrors.password 
+                  ? 'input-error' 
+                  : ''
+              }`}
               {...formik.getFieldProps('password')}
             />
             <button
@@ -92,6 +137,11 @@ const Login = () => {
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
+            {((formik.touched.password && formik.errors.password) || serverErrors.password) && (
+              <div className="error-message">
+                {serverErrors.password || formik.errors.password}
+              </div>
+            )}
           </div>
 
           <div className="form-options">
