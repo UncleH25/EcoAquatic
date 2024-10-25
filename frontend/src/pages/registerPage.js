@@ -9,7 +9,6 @@ const RegisterPage = () => {
   return (
     <div>
       <HeaderOther />
-      <h1>Please Register</h1>
       <Register/>
       <Footer />
     </div>

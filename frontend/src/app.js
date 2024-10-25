@@ -19,8 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/species-search" element={<SpeciesSearchPage />} />
         <Route path="/species-profile" element={<SpeciesProfilePage />} />

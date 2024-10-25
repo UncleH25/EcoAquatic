@@ -29,6 +29,8 @@ body {
   margin-top: -50px; /* Move the form container up */
   overflow: hidden; /* Hide any overflow */
   overflow-y: hidden;
+  padding: 5px;
+  padding-right: 15px;
 }
   
   .login-title {
@@ -180,10 +182,10 @@ body {
   }
   
   .divider span {
-    background-color: transparent;
-    padding: 0 10px;
+    color: var(--text-light);
+    font-size: 15px;
   }
-  
+
   .institute-login-button {
     width: 100%;
     padding: 12px;

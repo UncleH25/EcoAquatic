@@ -1,8 +1,165 @@
 @import 'variables.css';
 
 body {
+    font-family: var(--font-family);
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
     overflow-x: hidden; /* Prevent horizontal scrolling */
-    font-family: var(--font-family);
 }
+
+.register-container {
+    background-image: url('../assets/backgrounds/registerpage_bg.png');
+    background-size: 100% 100vh; /* Set the background size to cover the viewport height */
+    background-position: center; /* Center the background image */
+    height: 554px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden; /* Hide any overflow */
+    overflow-y: hidden;
+  }
+  
+  .register-form-container {
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin-top: -40px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-size: 3em;
+    font-weight: bolder;
+  }
+  
+.form-group {
+  margin: 10px auto;
+  margin-bottom: 15px;
+  position: relative;
+}
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+  
+  input.error {
+    border-color: #ff3333;
+  }
+  
+  .error-message {
+    color: #ff3333;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .password-group {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 24px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .password-toggle:focus {
+    outline: none;
+  }
+  
+  .signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-green);
+    color: var(--text-light);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-button:hover {
+    background-color: var(--primary-green-hover);
+  }
+  
+  .divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .divider::before {
+    left: 0;
+  }
+  
+  .divider::after {
+    right: 0;
+  }
+  
+  .divider span {
+    color: var(--text-light);
+    font-size: 15px;
+  }
+  
+  .institute-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--secondary-green);
+    color: var(--text-light);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .institute-button:hover {
+    background-color: var(--secondary-green-hover);
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-light);
+  }
+  
+  .login-link span {
+    color: var(--link-color);
+    cursor: pointer;
+  }
+  
+  .login-link span:hover {
+    color: var(--primary-green-hover);
+  }
