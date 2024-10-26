@@ -39,23 +39,27 @@ body {
   
 .form-group {
   margin: 10px auto;
+  display: block;
   margin-bottom: 15px;
   position: relative;
+  width: 95%;
 }
   
   input {
-    width: 100%;
+    width: 95%;
     padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid transparent;
+    border-radius: 8px;
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--input-bg);
+    backdrop-filter: blur(4px);
     transition: border-color 0.3s ease;
   }
   
   input:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: #204665;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
   }
   
   input.error {
@@ -89,12 +93,14 @@ body {
   }
   
   .signup-button {
-    width: 100%;
+    width: 50%;
+    display: block;
+    margin: auto;
     padding: 12px;
     background-color: var(--accent-green);
     color: var(--text-light);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -134,12 +140,14 @@ body {
   }
   
   .institute-button {
-    width: 100%;
+    width: 50%;
+    display: block;
+    margin: auto;
     padding: 12px;
     background-color: var(--secondary-green);
     color: var(--text-light);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -158,6 +166,7 @@ body {
   .login-link span {
     color: var(--link-color);
     cursor: pointer;
+    font-weight: bold;
   }
   
   .login-link span:hover {

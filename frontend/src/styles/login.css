@@ -50,7 +50,7 @@ body {
   
   .input-group {
     position: relative;
-    width: 100%;
+    width: 95%;
     margin-bottom: 24px;
   }
   
@@ -96,7 +96,7 @@ body {
   }
   
   .password-toggle:hover {
-    color: #333;
+    color: var(--text-dark);
   }
 
   .error-message {
@@ -129,7 +129,8 @@ body {
   }
   
   .forgot-password {
-    color: #850002;
+    color: #bb0003;
+    font-weight: bolder;
     text-decoration: none;
     background: none;
     border: none;
@@ -137,11 +138,13 @@ body {
   }
   
   .forgot-password:hover {
-    color: #bb0003;
+    color: #850002;
   }
   
   .login-button {
-    width: 100%;
+    width: 50%;
+    display: block;
+    margin: auto;
     padding: 12px;
     background-color: var(--accent-green);
     color: var(--text-light);
@@ -187,7 +190,9 @@ body {
   }
 
   .institute-login-button {
-    width: 100%;
+    width: 50%;
+    display: block;
+    margin: auto;
     padding: 12px;
     background-color: var(--secondary-green);
     color: var(--text-light);
@@ -205,12 +210,13 @@ body {
   
   .signup-prompt {
     text-align: center;
-    color: white;
+    color: var(--text-light);
     font-size: 0.875rem;
   }
   
   .signup-link {
     color: var(--link-color);
+    font-weight: bold;
     text-decoration: none;
     background: none;
     border: none;
