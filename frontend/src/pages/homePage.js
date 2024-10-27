@@ -1,10 +1,12 @@
 import React from 'react';
+import HeaderMain from '../components/common/headerMain';
+import Footer from '../components/common/footer';
 
 const HomePage = () => {
   return (
     <div>
-      <h3>Home Page</h3>
-      <p>Welcome to EcoAquatic!</p>
+      <HeaderMain />
+      <Footer />
     </div>
   );
 };

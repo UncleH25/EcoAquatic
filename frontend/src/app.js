@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SplashPage from './pages/splashPage';
 import LoginPage from './pages/loginPage';
 import RegisterPage from './pages/registerPage';
+import ResetPasswordPage from './pages/resetPasswordPage';
 import HomePage from './pages/homePage'; 
 import NotAuthorizedPage from './pages/notAuthorizedPage';
 import DashboardPage from './pages/dashBoardPage';
@@ -19,8 +20,9 @@ function App() {
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
+        <Route path="/forgot-password" element={<ResetPasswordPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/species-search" element={<SpeciesSearchPage />} />
         <Route path="/species-profile" element={<SpeciesProfilePage />} />

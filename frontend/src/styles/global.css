@@ -2,46 +2,141 @@
 
 /* Header Other */
 .header-other {
-    width: 100vw; /* Full width of the viewport */
+    width: 100vw;
     height: 129px;
-    background-color: var(--primary-blue); /* Dark blue background */
+    background-color: var(--primary-blue);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid var(--accent-yellow); /* Yellow border */
-    margin: 0 auto; /* Remove default margin and center horizontally */
-    padding: 0; /* Remove default padding */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    border-bottom: 2px solid var(--accent-yellow);
+    margin: 0 auto;
+    padding: 0;
+    overflow-x: hidden;
     font-family: var(--font-family);
 }
 
-/* Styling the logo container */
-.logo-container {
+.logo-container-other {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Styling the logo */
 .logo-other {
     width: 127px;
     height: 129px;
-    border-radius: 50%; /* Rounds the corners to a circle */
+    border-radius: 50%;
 }
 
+/* HeaderMain */
+.header-main {
+    display: flex;
+    align-items: flex-end; 
+    justify-content: space-between; 
+    background-color: var(--primary-blue);
+    height: 85px;
+    width: 100%;
+    padding: 0;
+    font-family: var(--font-family);
+    position: relative;
+    border-bottom: 2px solid var(--accent-yellow);
+}
+
+.logo-container-main {
+    margin-top: 200px;
+    padding-left: 20px;
+}
+
+.logo-main {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.nav-links {
+    display: flex;
+    height: 40px; 
+    flex-grow: 0; 
+    gap: 1px; 
+    margin: 0 auto; 
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+
+.nav-item {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 16px;
+    min-width: 100px;
+    justify-content: center; 
+    border-radius: 20px; 
+  }
+
+.nav-item span {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background-color: var(--secondary-blue); 
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 20px; 
+}
+
+.nav-item:hover::before {
+    opacity: 1;
+}
+
+.nav-item.active::before {
+    opacity: 1;
+}
+
+.user-icon {
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 8px 20px 16px 20px;
+}
+
+.user-icon:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+}
 
 /* Footer */
 .footer {
-    background-color: var(--primary-blue);  /* The same color as your header */
+    background-color: var(--primary-blue);
     color: var(--text-light);
-    padding: 15px 20px; /* Increased padding to add more height */
+    padding: 15px 20px;
     text-align: center;
-    border-top: 3px solid var(--accent-yellow); /* Adds a gold border at the top */
+    border-top: 3px solid var(--accent-yellow);
     position: fixed;
     width: 100%;
     bottom: 0;
-    display: flex; /* Add display flex to make it a flex container */
-    justify-content: space-between; /* Add justify-content to space out the content */
+    display: flex;
+    justify-content: space-between;
     font-family: var(--font-family);
 }
 
@@ -55,7 +150,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex; /* Add display flex to make it a flex container */
+    display: flex;
 }
 
 .footer-links li {
@@ -72,10 +167,17 @@
 }
 
 .footer-left-links {
-    margin-right: auto; /* Add margin-right auto to push it to the left */
+    margin-right: auto;
 }
 
 .footer-right-links {
-    margin-left: auto; /* Add margin-left auto to push it to the right */
+    margin-left: auto;
     margin-right: 25px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
 }
