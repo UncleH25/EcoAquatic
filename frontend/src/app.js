@@ -10,6 +10,9 @@ import DashboardPage from './pages/dashBoardPage';
 import SpeciesSearchPage from './pages/speciesSearchPage';
 import SpeciesProfilePage from './pages/speciesProfilePage';
 import UserPreferencesPage from './pages/userPreferencesPage';
+import AboutUsPage from './pages/aboutUsPage';
+import ContactPage from './pages/contactPage';
+import PrivacyPolicyPage from './pages/privacyPolicyPage';
 import AdminDashboard from './components/auth/adminDashboard';
 import ProtectedRoute from './components/auth/protectedRoute';
 
@@ -27,6 +30,9 @@ function App() {
         <Route path="/species-search" element={<SpeciesSearchPage />} />
         <Route path="/species-profile" element={<SpeciesProfilePage />} />
         <Route path="/user-settings" element={<UserPreferencesPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/not-authorized" element={<NotAuthorizedPage />} />
         
         {/* Protect the Admin route */}
