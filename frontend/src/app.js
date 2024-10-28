@@ -9,6 +9,7 @@ import NotAuthorizedPage from './pages/notAuthorizedPage';
 import DashboardPage from './pages/dashBoardPage';
 import SpeciesSearchPage from './pages/speciesSearchPage';
 import SpeciesProfilePage from './pages/speciesProfilePage';
+import InteractiveMapPage from './pages/interactiveMapPage';
 import UserPreferencesPage from './pages/userPreferencesPage';
 import AboutUsPage from './pages/aboutUsPage';
 import ContactPage from './pages/contactPage';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/species-search" element={<SpeciesSearchPage />} />
         <Route path="/species-profile" element={<SpeciesProfilePage />} />
+        <Route path="/interactive-map" element={<InteractiveMapPage />} />
         <Route path="/user-settings" element={<UserPreferencesPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactPage />} />
