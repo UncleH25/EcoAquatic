@@ -1,5 +1,9 @@
 @import 'variables.css';
 
+body {
+  font-family: var(--font-family);
+}
+
 .hero-section {
     position: relative;
     height: 400px;
@@ -42,7 +46,7 @@
     margin-right: auto;
   }
   
-  .button-container {
+  .button-container-header {
     display: flex;
     gap: 1rem;
     justify-content: center;

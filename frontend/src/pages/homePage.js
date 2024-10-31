@@ -29,7 +29,7 @@ const HomePage = () => {
           <p className="hero-description">
             Stay informed, take action, and be a part of the movement to preserve our planet's aquatic treasures for future generations
           </p>
-          <div className="button-container">
+          <div className="button-container-header">
             <button
               onClick={() => handleNavigation('/interactive-map')}
               className="primary-button"
