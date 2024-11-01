@@ -9,5 +9,13 @@ namespace EcoAquatic.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        public DbSet<SpeciesModel> FishSpecies { get; set; }  // DbSet for Species table
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<SpeciesModel>().ToTable("FishSpecies");
+        }
     }
 }

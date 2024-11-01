@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 // Define an object for API configurations
 const ApiConfigs = {
   GBIF: {

@@ -8,3 +8,4 @@ namespace EcoAquatic.Models
         public required string FullName { get; set; }
     }
 }
+
