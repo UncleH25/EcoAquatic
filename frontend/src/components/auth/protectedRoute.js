@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 
   if (!token &&  !isAuthenticated) {
 
-    return <Navigate to="/login" />;  // Redirect to login if no token is found
+    return <Navigate to="/" />;  // Redirect to splash if no token is found
   }
 
   const decoded = jwtDecode(token);
