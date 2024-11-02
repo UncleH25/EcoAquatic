@@ -16,38 +16,40 @@ import ContactPage from './pages/contactPage';
 import PrivacyPolicyPage from './pages/privacyPolicyPage';
 import AdminDashboard from './components/auth/adminDashboard';
 import ProtectedRoute from './components/auth/protectedRoute';
-
+import { AuthProvider } from './contexts/authContext';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SplashPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ResetPasswordPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/species-search" element={<SpeciesSearchPage />} />
-        <Route path="/species-profile" element={<SpeciesProfilePage />} />
-        <Route path="/interactive-map" element={<InteractiveMapPage />} />
-        <Route path="/user-settings" element={<UserPreferencesPage />} />
-        <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        <Route path="/not-authorized" element={<NotAuthorizedPage />} />
-        
-        {/* Protect the Admin route */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute requiredRole="Admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-        
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ResetPasswordPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/home" element={<HomePage />} />  {/* Home route for regular users */}
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/species-search" element={<SpeciesSearchPage />} />
+          <Route path="/species-profile" element={<SpeciesProfilePage />} />
+          <Route path="/interactive-map" element={<InteractiveMapPage />} />
+          <Route path="/user-settings" element={<UserPreferencesPage />} />
+          <Route path="/about-us" element={<AboutUsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/not-authorized" element={<NotAuthorizedPage />} />
+          
+          {/* Protect the Admin route */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="Admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Eye, EyeOff } from 'lucide-react';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import useAuth from '../../hooks/useAuth';
 import '../../styles/login.css';
 
 const LoginSchema = Yup.object().shape({
@@ -17,6 +16,7 @@ const LoginSchema = Yup.object().shape({
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [serverErrors, setServerErrors] = useState({
@@ -35,8 +35,7 @@ const Login = () => {
         // Reset server errors before attempting login
         setServerErrors({ email: '', password: '' });
 
-        const response = await axios.post("http://localhost:5232/api/auth/login", values);
-        const { token } = response.data;
+        await login(values.email, values.password);
         
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', values.email);
@@ -44,16 +43,6 @@ const Login = () => {
           localStorage.removeItem('rememberedEmail');
         }
 
-        localStorage.setItem("token", token);
-        
-        const decoded = jwtDecode(token);
-        const userRoles = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-        
-        if (userRoles?.includes("Admin")) {
-          navigate("/admin");
-        } else {
-          navigate("/home");
-        }
       } catch (error) {
         console.error("Login failed:", error);
         
