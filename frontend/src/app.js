@@ -17,6 +17,7 @@ import PrivacyPolicyPage from './pages/privacyPolicyPage';
 import AdminDashboard from './components/auth/adminDashboard';
 import ProtectedRoute from './components/auth/protectedRoute';
 import { AuthProvider } from './contexts/authContext';
+import FishSpeciesDataPage from './pages/fishSpeciesDataPage';
 
 function App() {
   return (

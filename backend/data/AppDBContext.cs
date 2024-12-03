@@ -10,12 +10,12 @@ namespace EcoAquatic.Data
         {
         }
 
-        public DbSet<SpeciesModel> FishSpecies { get; set; }  // DbSet for Species table
+        public DbSet<SpeciesModel> Species { get; set; }  // DbSet for Species table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<SpeciesModel>().ToTable("FishSpecies");
+            modelBuilder.Entity<SpeciesModel>().ToTable("Species");
         }
     }
 }

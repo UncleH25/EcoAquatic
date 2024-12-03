@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <!-- BCrypt for secure password hashing -->
+    <PackageReference Include="Apache.Arrow" Version="18.0.0" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
 
     <!-- FluentValidation for easy-to-use input validation -->
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
@@ -45,15 +47,18 @@
 
     <!-- Additional identity stores for EF Core -->
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
     <!-- PostgreSQL provider for EF Core -->
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+    <PackageReference Include="Parquet.Net" Version="5.0.2" />
 
     <!-- Serilog for structured logging in ASP.NET Core -->
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
 
     <!-- Swagger UI for interactive API documentation -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
 </Project>

@@ -65,6 +65,12 @@ namespace backend.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -227,20 +233,37 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AverageSize")
-                        .IsRequired()
+                    b.Property<string>("Adaptations")
+                        .HasColumnType("text");
+
+                    b.Property<float>("AverageSize")
+                        .HasColumnType("real");
+
+                    b.Property<float>("AverageWeight")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Behaviour")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("ClimateSensitivity")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("CommonName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ConservationActions")
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("ConservationStatus")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<int>("DepthRange")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -255,27 +278,63 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("EcologicalRole")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EconomicImportance")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Endemism")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("GeographicalLocation_BodyOfWater")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("GeographicalLocation_Continent")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("GeographicalLocation_Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Habitat")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("HabitatCategory")
                         .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("ImageUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<string>("Lifespan")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("MigrationPattern")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("NativeStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("ObservationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PopulationTrend")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<string>("RegionInfo")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
 
                     b.Property<string>("ScientificName")
                         .IsRequired()
@@ -287,8 +346,22 @@ namespace backend.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("SubHabitat")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TaxonomicAuthority")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("Taxonomy")
                         .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<float>("TemperatureRange")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Threats")
                         .HasColumnType("jsonb");
 
                     b.HasKey("Id");

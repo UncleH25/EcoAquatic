@@ -46,11 +46,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+    // Configure PostgreSQL connection
+    builder.Services.AddEntityFrameworkNpgsql();
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configure PostgreSQL connection
-builder.Services.AddEntityFrameworkNpgsql();
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddScoped<ApiService>();
+    builder.Services.AddScoped<SpeciesService>();
+    builder.Services.AddControllers();
+
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
@@ -105,7 +110,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configure the HTTP request pipeline.
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var summaries = new[]
 {
