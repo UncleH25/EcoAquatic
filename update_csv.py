@@ -5,8 +5,8 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Set the relative paths for the original and transformed CSV files
-original_csv_path = os.path.join(current_dir, 'Fish_Data', 'species_fishbase.csv')
-transformed_csv_path = os.path.join(current_dir, 'Fish_Data', 'modified_species_fishbase.csv')
+original_csv_path = os.path.join(current_dir, 'Data', 'species_fishbase.csv')
+transformed_csv_path = os.path.join(current_dir, 'Data', 'modified_species_fishbase.csv')
 
 # Load the original CSV
 if not os.path.exists(original_csv_path):

@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using EcoAquatic.Models;
+using DotNetEnv;
+
+// Load environment variables from .env file
+Env.Load();
+Console.WriteLine($"OBIS_API_BASE_URL: {Environment.GetEnvironmentVariable("OBIS_API_BASE_URL")}");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +58,7 @@ builder.Services.AddAuthentication(options =>
 
 
     builder.Services.AddScoped<ApiService>();
+    builder.Services.AddHttpClient<ApiService>();
     builder.Services.AddScoped<SpeciesService>();
     builder.Services.AddControllers();
 
@@ -101,6 +107,9 @@ app.UseCors("Allowfrontend");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRouting();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

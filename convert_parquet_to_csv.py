@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Set the relative path for the CSV file in the EcoAquatic directory
-csv_file_path = os.path.join(current_dir, 'Fish_Data', 'species_fishbase.csv')
+csv_file_path = os.path.join(current_dir, 'Data', 'species_fishbase.csv')
 
 # Check if the CSV file exists and if it needs to be updated
 def needs_update(file_path):

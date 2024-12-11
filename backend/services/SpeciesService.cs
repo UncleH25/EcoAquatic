@@ -23,7 +23,7 @@ public class SpeciesService
         {
             // Construct the file path using the Documents folder and known structure
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
-                "EcoAquatic", "Fish_Data", fileName);
+                "EcoAquatic", "Data", fileName);
 
             Console.WriteLine($"Looking for CSV file at: {filePath}");
 
@@ -75,7 +75,7 @@ public class SpeciesService
                         Lifespan = record.Lifespan,
                         ImageUrl = record.ImageUrl,
                         Description = record.Description,
-                        ObservationDate = DateTime.UtcNow,
+                        ObservationDate = record.ObservationDate,
                         SourceApi = record.SourceApi,
                         TaxonomicAuthority = record.TaxonomicAuthority,
                         AverageSize = float.TryParse(record.AverageSize?.ToString(), out float size) ? size : 0f,
@@ -102,5 +102,45 @@ public class SpeciesService
             Console.WriteLine($"An error occurred while importing species: {ex.Message}");
             throw; // Rethrow the exception to be handled upstream
         }
+    }
+
+    // OBIS API call
+    // GET occurrence data
+    public async Task<string> GetOccurrenceData(string scientificName = null, string taxonId = null, string datasetId = null,
+        string startDate = null, string endDate = null, int? startDepth = null, int? endDepth = null,
+        string geometry = null, int? size = null, int? offset = null)
+    {
+        return await _apiService.GetOccurrenceData(scientificName, taxonId, datasetId, startDate, endDate, startDepth, endDepth, geometry, size, offset);
+    }
+
+    // GET gridded occurrences
+    public async Task<string> GetGriddedOccurrences(string precision, string geometry, string redlist = null, string hab = null, string wrims = null)
+    {
+        return await _apiService.GetGriddedOccurrences(precision, geometry, redlist, hab, wrims);
+    }
+
+    // GET datasets
+    public async Task<string> GetDatasets(string nodeId = null, string modifiedSince = null)
+    {
+        return await _apiService.GetDatasets(nodeId, modifiedSince);
+    }
+
+    // GET taxonomy
+    public async Task<string> GetTaxonomy(string scientificName, string rank = null)
+    {
+        return await _apiService.GetTaxonomy(scientificName, rank);
+    }
+
+    // GET OBIS nodes
+    public async Task<string> GetNodes()
+    {
+        return await _apiService.GetNodes();
+    }
+
+    // GET statistics
+    public async Task<string> GetStatistics(string scientificName = null, string geometry = null, 
+        string startDate = null, string endDate = null)
+    {
+        return await _apiService.GetStatistics(scientificName, geometry, startDate, endDate);
     }
 }
