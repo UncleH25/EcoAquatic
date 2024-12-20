@@ -51,7 +51,7 @@ public class SpeciesController : ControllerBase
 
     // OBIS API GET
     // Endpoint to get occurrence data
-    [HttpGet("obis/occurrence")]
+    [HttpGet("occurrence")]
     public async Task<IActionResult> GetOccurrenceData(
         string scientificName = null, string taxonId = null, string datasetId = null,
         string startDate = null, string endDate = null, int? startDepth = null, int? endDepth = null,
@@ -62,7 +62,7 @@ public class SpeciesController : ControllerBase
     }
 
     // Endpoint to get gridded occurrences
-    [HttpGet("obis/occurrence/grid")]
+    [HttpGet("occurrence/grid")]
     public async Task<IActionResult> GetGriddedOccurrences(
         string precision, string geometry, string redlist = null, string hab = null, string wrims = null)
     {
@@ -71,23 +71,39 @@ public class SpeciesController : ControllerBase
     }
 
     // Endpoint to get datasets
-    [HttpGet("obis/dataset")]
+    [HttpGet("dataset")]
     public async Task<IActionResult> GetDatasets(string nodeId = null, string modifiedSince = null)
     {
         var result = await _speciesService.GetDatasets(nodeId, modifiedSince);
         return Ok(result);
     }
 
-    // Endpoint to get taxonomy
-    [HttpGet("obis/taxon")]
-    public async Task<IActionResult> GetTaxonomy(string scientificName, string rank = null)
+    // Endpoint to get taxonomy by ID
+    [HttpGet("taxon/{id}")]
+    public async Task<IActionResult> GetTaxonomyById(int id)
     {
-        var result = await _speciesService.GetTaxonomy(scientificName, rank);
+        var result = await _speciesService.GetTaxonomy(id.ToString(), "id");
+        return Ok(result);
+    }
+
+    // Endpoint to get taxonomy by scientific name
+    [HttpGet("taxon/scientificname/{scientificName}")]
+    public async Task<IActionResult> GetTaxonomyByScientificName(string scientificName)
+    {
+        var result = await _speciesService.GetTaxonomy(scientificName, "scientificname");
+        return Ok(result);
+    }
+
+    // Endpoint to get taxonomy annotations
+    [HttpGet("taxon/annotations")]
+    public async Task<IActionResult> GetTaxonomyAnnotations([FromQuery] string scientificName = "")
+    {
+        var result = await _speciesService.GetTaxonomy(scientificName, "annotations");
         return Ok(result);
     }
 
     // Endpoint to get OBIS nodes
-    [HttpGet("obis/node")]
+    [HttpGet("node")]
     public async Task<IActionResult> GetNodes()
     {
         var result = await _speciesService.GetNodes();
@@ -95,7 +111,7 @@ public class SpeciesController : ControllerBase
     }
 
     // Endpoint to get statistics
-    [HttpGet("obis/statistics")]
+    [HttpGet("statistics")]
     public async Task<IActionResult> GetStatistics(string scientificName = null, string geometry = null, 
         string startDate = null, string endDate = null)
     {

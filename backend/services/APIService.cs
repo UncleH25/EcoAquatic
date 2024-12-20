@@ -154,17 +154,22 @@ public class ApiService
     }
 
     // get taxonomic details
-    public async Task<string> GetTaxonomy(string scientificName, string? rank = null)
+    public async Task<string> GetTaxonomy(string identifier, string type = "id")
     {
-        var queryParams = new List<string>
+        if (type == "id" && !int.TryParse(identifier, out _))
         {
-            $"scientificname={Uri.EscapeDataString(scientificName)}"
+            throw new ArgumentException("ID must be an integer.", nameof(identifier));
+        }
+
+        string endpoint = type.ToLower() switch
+        {
+            "annotations" => $"/taxon/annotations{(string.IsNullOrEmpty(identifier) ? "" : $"?scientificname={Uri.EscapeDataString(identifier)}")}",
+            "scientificname" => $"/taxon/{Uri.EscapeDataString(identifier)}",
+            "id" => $"/taxon/{Uri.EscapeDataString(identifier)}",
+            _ => throw new ArgumentException("Invalid type specified.", nameof(type))
         };
 
-        if (!string.IsNullOrEmpty(rank)) queryParams.Add($"rank={rank}");
-
-        var queryString = string.Join("&", queryParams);
-        return await GetDataFromObisApi($"/taxon?{queryString}");
+        return await GetDataFromObisApi(endpoint);
     }
 
     // get OBIS nodes
