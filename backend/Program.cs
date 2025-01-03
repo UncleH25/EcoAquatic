@@ -57,9 +57,10 @@ builder.Services.AddAuthentication(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-    builder.Services.AddScoped<ApiService>();
-    builder.Services.AddHttpClient<ApiService>();
-    builder.Services.AddScoped<SpeciesService>();
+    builder.Services.AddScoped<ApiService_FB>();
+    builder.Services.AddHttpClient<ApiService_OBIS>();
+    builder.Services.AddScoped<SpeciesService_FB>();
+    builder.Services.AddScoped<SpeciesService_OBIS>();
     builder.Services.AddControllers();
 
 

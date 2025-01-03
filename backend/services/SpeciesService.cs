@@ -5,15 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using EcoAquatic.Models;
+using CsvHelper.Configuration;
+using System.Text.Json;
 
-public class SpeciesService
+public class SpeciesService_FB
 {
-    private readonly ApiService _apiService;
+    private readonly ApiService_FB _apiServiceFB;
     private readonly AppDbContext _dbContext;
 
-    public SpeciesService(ApiService apiService, AppDbContext dbContext)
+    public SpeciesService_FB(ApiService_FB apiServiceFB, AppDbContext dbContext)
     {
-        _apiService = apiService;
+        _apiServiceFB = apiServiceFB;
         _dbContext = dbContext;
     }
 
@@ -103,44 +106,133 @@ public class SpeciesService
             throw; // Rethrow the exception to be handled upstream
         }
     }
+}
 
-    // OBIS API call
-    // GET occurrence data
-    public async Task<string> GetOccurrenceData(string scientificName = null, string taxonId = null, string datasetId = null,
-        string startDate = null, string endDate = null, int? startDepth = null, int? endDepth = null,
-        string geometry = null, int? size = null, int? offset = null)
+public class SpeciesService_OBIS
+{
+    private readonly ApiService_OBIS _apiServiceOBIS;
+    private readonly string _baseOutputPath;
+
+    public SpeciesService_OBIS(ApiService_OBIS apiServiceOBIS, string baseOutputPath = null)
     {
-        return await _apiService.GetOccurrenceData(scientificName, taxonId, datasetId, startDate, endDate, startDepth, endDepth, geometry, size, offset);
+        _apiServiceOBIS = apiServiceOBIS;
+        _baseOutputPath = baseOutputPath ?? Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            "EcoAquatic",
+            "ObisData"
+        );
+        EnsureOutputDirectoryExists();
     }
 
-    // GET gridded occurrences
-    public async Task<string> GetGriddedOccurrences(string precision, string geometry, string redlist = null, string hab = null, string wrims = null)
+    public void EnsureOutputDirectoryExists()
     {
-        return await _apiService.GetGriddedOccurrences(precision, geometry, redlist, hab, wrims);
+        if (!Directory.Exists(_baseOutputPath))
+        {
+            Directory.CreateDirectory(_baseOutputPath);
+        }
     }
 
-    // GET datasets
-    public async Task<string> GetDatasets(string nodeId = null, string modifiedSince = null)
+    public string GetOutputFilePath(string fileName)
     {
-        return await _apiService.GetDatasets(nodeId, modifiedSince);
+        return Path.Combine(_baseOutputPath, $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}.json");
     }
 
-    // GET taxonomy
-    public async Task<string> GetTaxonomy(string scientificName, string rank = null)
+    public async Task SaveToJson(string data, string fileName)
     {
-        return await _apiService.GetTaxonomy(scientificName, rank);
+        var filePath = GetOutputFilePath(fileName);
+        
+        using var writer = new StreamWriter(filePath);
+        await writer.WriteAsync(data);
+        Console.WriteLine($"Saved data to {filePath}");
     }
 
-    // GET OBIS nodes
-    public async Task<string> GetNodes()
+    // OBIS API Methods
+    public async Task SaveOccurrenceDataToCsv(string scientificName = null, string taxonId = null, 
+        string datasetId = null, string startDate = null, string endDate = null, 
+        int? startDepth = null, int? endDepth = null, string geometry = null, 
+        int? size = null, int? offset = null)
     {
-        return await _apiService.GetNodes();
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetOccurrenceDataAsync(scientificName, taxonId, 
+                datasetId, startDate, endDate, startDepth, endDepth, geometry, size, offset);
+            
+            await SaveToJson(jsonResponse, "Occurrences");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save occurrence data: {ex.Message}", ex);
+        }
     }
 
-    // GET statistics
-    public async Task<string> GetStatistics(string scientificName = null, string geometry = null, 
+    public async Task SaveGriddedOccurrencesToCsv(string precision, string geometry, 
+        string redlist = null, string hab = null, string wrims = null)
+    {
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetGriddedOccurrencesAsync(precision, geometry, 
+                redlist, hab, wrims);
+            
+            await SaveToJson(jsonResponse, "GriddedOccurrences");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save gridded occurrences: {ex.Message}", ex);
+        }
+    }
+
+    public async Task SaveDatasetsToCsv(string nodeId = null, string modifiedSince = null)
+    {
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetDatasetsAsync(nodeId, modifiedSince);
+            await SaveToJson(jsonResponse, "Datasets");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save datasets: {ex.Message}", ex);
+        }
+    }
+
+    public async Task SaveTaxonomyToCsv(string scientificName, string rank = null)
+    {
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetTaxonomyAsync(scientificName, rank);
+            await SaveToJson(jsonResponse, "Taxonomy");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save taxonomy: {ex.Message}", ex);
+        }
+    }
+
+    public async Task SaveNodesToCsv()
+    {
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetNodesAsync();
+            await SaveToJson(jsonResponse, "Nodes");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save nodes: {ex.Message}", ex);
+        }
+    }
+
+    public async Task SaveStatisticsToCsv(string scientificName = null, string geometry = null, 
         string startDate = null, string endDate = null)
     {
-        return await _apiService.GetStatistics(scientificName, geometry, startDate, endDate);
+        try
+        {
+            var jsonResponse = await _apiServiceOBIS.GetStatisticsAsync(scientificName, geometry, 
+                startDate, endDate);
+            
+            await SaveToJson(jsonResponse, "Statistics");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to save statistics: {ex.Message}", ex);
+        }
     }
 }

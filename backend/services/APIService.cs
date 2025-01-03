@@ -7,29 +7,20 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using CsvHelper;
+using EcoAquatic.Models;
+using System.Text.Json;
 
-public class ApiService
+public class ApiService_FB
 {
     private readonly HttpClient _httpClient;
     private readonly string _filePath;
-    private readonly string _obisApiUrl;
 
-    public ApiService(IConfiguration configuration, HttpClient httpClient)
+    public ApiService_FB(IConfiguration configuration, HttpClient httpClient)
     {
         // Get the file path from configuration
         _filePath = configuration["APISettings:FishBaseApi:CSV_FilePath"];
         _httpClient = httpClient;
-        // Fetch the OBIS API URL from the environment variable
-        _obisApiUrl = Environment.GetEnvironmentVariable("OBIS_API_BASE_URL");
-
-        // Log the constructed OBIS API URL
-        Console.WriteLine($"Constructed OBIS API BASE URL: {_obisApiUrl}");
-
-        // Check if the OBIS API URL is set
-        if (string.IsNullOrEmpty(_obisApiUrl))
-        {
-            throw new InvalidOperationException("OBIS_API_BASE_URL environment variable is not set.");
-        }
 
         // Log the constructed file path
         Console.WriteLine($"Constructed file path: {_filePath}");
@@ -104,104 +95,127 @@ public class ApiService
 
         return speciesList;
     }
+}
 
-      // get occurrence data with parameters
-    public async Task<string> GetOccurrenceData(string? scientificName = null, string? taxonId = null, string? datasetId = null,
-        string? startDate = null, string? endDate = null, int? startDepth = null, int? endDepth = null,
-        string? geometry = null, int? size = null, int? offset = null)
+public class ApiService_OBIS
+{
+    private readonly string _obisApiUrl;
+    private readonly HttpClient _httpClient;
+
+    public ApiService_OBIS(IConfiguration configuration, HttpClient httpClient)
     {
-        var queryParams = new List<string>();
-        if (!string.IsNullOrEmpty(scientificName)) queryParams.Add($"scientificname={Uri.EscapeDataString(scientificName)}");
-        if (!string.IsNullOrEmpty(taxonId)) queryParams.Add($"taxonid={taxonId}");
-        if (!string.IsNullOrEmpty(datasetId)) queryParams.Add($"datasetid={datasetId}");
-        if (!string.IsNullOrEmpty(startDate)) queryParams.Add($"startdate={startDate}");
-        if (!string.IsNullOrEmpty(endDate)) queryParams.Add($"enddate={endDate}");
-        if (startDepth.HasValue) queryParams.Add($"startdepth={startDepth.Value}");
-        if (endDepth.HasValue) queryParams.Add($"enddepth={endDepth.Value}");
-        if (!string.IsNullOrEmpty(geometry)) queryParams.Add($"geometry={Uri.EscapeDataString(geometry)}");
-        if (size.HasValue) queryParams.Add($"size={size.Value}");
-        if (offset.HasValue) queryParams.Add($"offset={offset.Value}");
+        // Get the file path from configuration
+        _httpClient = httpClient;
+        // Fetch the OBIS API URL from the environment variable
+        _obisApiUrl = Environment.GetEnvironmentVariable("OBIS_API_BASE_URL");
 
-        var queryString = string.Join("&", queryParams);
-        return await GetDataFromObisApi($"/occurrence?{queryString}");
-    }
+        // Log the constructed OBIS API URL
+        Console.WriteLine($"Constructed OBIS API BASE URL: {_obisApiUrl}");
 
-    // get gridded occurrence data
-    public async Task<string> GetGriddedOccurrences(string precision, string geometry, string? redlist = null, string? hab = null, string? wrims = null)
-    {
-        var queryParams = new List<string>
+        // Check if the OBIS API URL is set
+        if (string.IsNullOrEmpty(_obisApiUrl))
         {
-            $"geometry={Uri.EscapeDataString(geometry)}"
-        };
-
-        if (!string.IsNullOrEmpty(redlist)) queryParams.Add($"redlist={redlist}");
-        if (!string.IsNullOrEmpty(hab)) queryParams.Add($"hab={hab}");
-        if (!string.IsNullOrEmpty(wrims)) queryParams.Add($"wrims={wrims}");
-
-        var queryString = string.Join("&", queryParams);
-        return await GetDataFromObisApi($"/occurrence/grid/{precision}?{queryString}");
+            throw new InvalidOperationException("OBIS_API_BASE_URL environment variable is not set.");
+        }
     }
 
-    // get dataset metadata
-    public async Task<string> GetDatasets(string? nodeId = null, string? modifiedSince = null)
-    {
-        var queryParams = new List<string>();
-        if (!string.IsNullOrEmpty(nodeId)) queryParams.Add($"nodeid={nodeId}");
-        if (!string.IsNullOrEmpty(modifiedSince)) queryParams.Add($"modified={modifiedSince}");
-
-        var queryString = string.Join("&", queryParams);
-        return await GetDataFromObisApi($"/dataset?{queryString}");
-    }
-
-    // get taxonomic details
-    public async Task<string> GetTaxonomy(string identifier, string type = "id")
-    {
-        if (type == "id" && !int.TryParse(identifier, out _))
+         // Get occurrence data
+        public async Task<string> GetOccurrenceDataAsync(string? scientificName = null, string? taxonId = null, string? datasetId = null,
+            string? startDate = null, string? endDate = null, int? startDepth = null, int? endDepth = null,
+            string? geometry = null, int? size = null, int? offset = null)
         {
-            throw new ArgumentException("ID must be an integer.", nameof(identifier));
+            var queryParams = new List<string>();
+            if (!string.IsNullOrEmpty(scientificName)) queryParams.Add($"scientificname={Uri.EscapeDataString(scientificName)}");
+            if (!string.IsNullOrEmpty(taxonId)) queryParams.Add($"taxonid={taxonId}");
+            if (!string.IsNullOrEmpty(datasetId)) queryParams.Add($"datasetid={datasetId}");
+            if (!string.IsNullOrEmpty(startDate)) queryParams.Add($"startdate={startDate}");
+            if (!string.IsNullOrEmpty(endDate)) queryParams.Add($"enddate={endDate}");
+            if (startDepth.HasValue) queryParams.Add($"startdepth={startDepth.Value}");
+            if (endDepth.HasValue) queryParams.Add($"enddepth={endDepth.Value}");
+            if (!string.IsNullOrEmpty(geometry)) queryParams.Add($"geometry={Uri.EscapeDataString(geometry)}");
+            if (size.HasValue) queryParams.Add($"size={size.Value}");
+            if (offset.HasValue) queryParams.Add($"offset={offset.Value}");
+
+            var queryString = string.Join("&", queryParams);
+            return await GetDataFromObisApiAsync($"/occurrence?{queryString}");
         }
 
-        string endpoint = type.ToLower() switch
+        // Get gridded occurrence data
+        public async Task<string> GetGriddedOccurrencesAsync(string precision, string geometry, string? redlist = null, string? hab = null, string? wrims = null)
         {
-            "annotations" => $"/taxon/annotations{(string.IsNullOrEmpty(identifier) ? "" : $"?scientificname={Uri.EscapeDataString(identifier)}")}",
-            "scientificname" => $"/taxon/{Uri.EscapeDataString(identifier)}",
-            "id" => $"/taxon/{Uri.EscapeDataString(identifier)}",
-            _ => throw new ArgumentException("Invalid type specified.", nameof(type))
-        };
+            var queryParams = new List<string>
+            {
+                $"geometry={Uri.EscapeDataString(geometry)}"
+            };
 
-        return await GetDataFromObisApi(endpoint);
+            if (!string.IsNullOrEmpty(redlist)) queryParams.Add($"redlist={redlist}");
+            if (!string.IsNullOrEmpty(hab)) queryParams.Add($"hab={hab}");
+            if (!string.IsNullOrEmpty(wrims)) queryParams.Add($"wrims={wrims}");
+
+            var queryString = string.Join("&", queryParams);
+            return await GetDataFromObisApiAsync($"/occurrence/grid/{precision}?{queryString}");
+        }
+
+        // Get dataset metadata
+        public async Task<string> GetDatasetsAsync(string? nodeId = null, string? modifiedSince = null)
+        {
+            var queryParams = new List<string>();
+            if (!string.IsNullOrEmpty(nodeId)) queryParams.Add($"nodeid={nodeId}");
+            if (!string.IsNullOrEmpty(modifiedSince)) queryParams.Add($"modified={modifiedSince}");
+
+            var queryString = string.Join("&", queryParams);
+            return await GetDataFromObisApiAsync($"/dataset?{queryString}");
+        }
+
+        // Get taxonomic details
+        public async Task<string> GetTaxonomyAsync(string identifier, string type = "id")
+        {
+            if (type == "id" && !int.TryParse(identifier, out _))
+            {
+                throw new ArgumentException("ID must be an integer.", nameof(identifier));
+            }
+
+            string endpoint = type.ToLower() switch
+            {
+                "annotations" => $"/taxon/annotations{(string.IsNullOrEmpty(identifier) ? "" : $"?scientificname={Uri.EscapeDataString(identifier)}")}",
+                "scientificname" => $"/taxon/{Uri.EscapeDataString(identifier)}",
+                "id" => $"/taxon/{Uri.EscapeDataString(identifier)}",
+                _ => throw new ArgumentException("Invalid type specified.", nameof(type))
+            };
+
+            return await GetDataFromObisApiAsync(endpoint);
+        }
+
+        // Get OBIS nodes
+        public async Task<string> GetNodesAsync()
+        {
+            return await GetDataFromObisApiAsync("/node");
+        }
+
+        // Get statistics
+        public async Task<string> GetStatisticsAsync(string? scientificName = null, string? geometry = null, 
+            string? startDate = null, string? endDate = null)
+        {
+            var queryParams = new List<string>();
+            if (!string.IsNullOrEmpty(scientificName)) queryParams.Add($"scientificname={Uri.EscapeDataString(scientificName)}");
+            if (!string.IsNullOrEmpty(geometry)) queryParams.Add($"geometry={Uri.EscapeDataString(geometry)}");
+            if (!string.IsNullOrEmpty(startDate)) queryParams.Add($"startdate={startDate}");
+            if (!string.IsNullOrEmpty(endDate)) queryParams.Add($"enddate={endDate}");
+
+            var queryString = string.Join("&", queryParams);
+            return await GetDataFromObisApiAsync($"/statistics?{queryString}");
+        }
+
+        // OBIS API call
+        private async Task<string> GetDataFromObisApiAsync(string endpoint)
+        {
+            var requestUrl = $"{_obisApiUrl}{endpoint}";
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
+        }
     }
-
-    // get OBIS nodes
-    public async Task<string> GetNodes()
-    {
-        return await GetDataFromObisApi("/node");
-    }
-
-    // get statistics
-    public async Task<string> GetStatistics(string? scientificName = null, string? geometry = null, 
-        string? startDate = null, string? endDate = null)
-    {
-        var queryParams = new List<string>();
-        if (!string.IsNullOrEmpty(scientificName)) queryParams.Add($"scientificname={Uri.EscapeDataString(scientificName)}");
-        if (!string.IsNullOrEmpty(geometry)) queryParams.Add($"geometry={Uri.EscapeDataString(geometry)}");
-        if (!string.IsNullOrEmpty(startDate)) queryParams.Add($"startdate={startDate}");
-        if (!string.IsNullOrEmpty(endDate)) queryParams.Add($"enddate={endDate}");
-
-        var queryString = string.Join("&", queryParams);
-        return await GetDataFromObisApi($"/statistics?{queryString}");
-    }
-
-    // OBIS API call
-    private async Task<string> GetDataFromObisApi(string endpoint)
-    {
-        var requestUrl = $"{_obisApiUrl}{endpoint}";
-        var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-
-        return await response.Content.ReadAsStringAsync();
-    }
-}

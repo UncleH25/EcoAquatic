@@ -6,13 +6,17 @@ using EcoAquatic.Models;
 [Route("api/[controller]")]
 public class SpeciesController : ControllerBase
 {
-    private readonly ApiService _apiService;
-    private readonly SpeciesService _speciesService;
+    private readonly ApiService_FB _apiServiceFB;
+    private readonly SpeciesService_FB _speciesServiceFB;
+    private readonly ApiService_OBIS _apiServiceOBIS;
+    private readonly SpeciesService_OBIS _speciesServiceOBIS;
 
-    public SpeciesController(ApiService apiService, SpeciesService speciesService)
+    public SpeciesController(ApiService_FB apiServiceFB, SpeciesService_FB speciesServiceFB, ApiService_OBIS apiServiceOBIS, SpeciesService_OBIS speciesServiceOBIS)
     {
-        _apiService = apiService;
-        _speciesService = speciesService;
+        _apiServiceFB = apiServiceFB;
+        _speciesServiceFB = speciesServiceFB;
+        _apiServiceOBIS = apiServiceOBIS;
+        _speciesServiceOBIS = speciesServiceOBIS;
     }
 
     //Read FishBase CSV
@@ -21,7 +25,7 @@ public class SpeciesController : ControllerBase
     {
         try
         {
-            var speciesList = await Task.Run(() => _apiService.ReadSpeciesFromCsv());
+            var speciesList = await Task.Run(() => _apiServiceFB.ReadSpeciesFromCsv());
             return Ok(speciesList);
         }
         catch (FileNotFoundException ex)
@@ -40,7 +44,7 @@ public class SpeciesController : ControllerBase
     {
         try
         {
-            await _speciesService.ImportFishSpeciesFromCsv();
+            await _speciesServiceFB.ImportFishSpeciesFromCsv();
             return Ok(new { message = "Import successful." });
         }
         catch (Exception ex)
@@ -51,71 +55,90 @@ public class SpeciesController : ControllerBase
 
     // OBIS API GET
     // Endpoint to get occurrence data
-    [HttpGet("occurrence")]
+    // GET occurrence data
+    [HttpGet("occurrences")]
     public async Task<IActionResult> GetOccurrenceData(
-        string scientificName = null, string taxonId = null, string datasetId = null,
-        string startDate = null, string endDate = null, int? startDepth = null, int? endDepth = null,
-        string geometry = null, int? size = null, int? offset = null)
+        string scientificName = null,
+        string taxonId = null,
+        string datasetId = null,
+        string startDate = null,
+        string endDate = null,
+        int? startDepth = null,
+        int? endDepth = null,
+        string geometry = null,
+        int? size = null,
+        int? offset = null)
     {
-        var result = await _speciesService.GetOccurrenceData(scientificName, taxonId, datasetId, startDate, endDate, startDepth, endDepth, geometry, size, offset);
-        return Ok(result);
+        await _speciesServiceOBIS.SaveOccurrenceDataToCsv(
+            scientificName,
+            taxonId,
+            datasetId,
+            startDate,
+            endDate,
+            startDepth,
+            endDepth,
+            geometry,
+            size,
+            offset);
+
+        return Ok("Occurrence data saved to CSV");
     }
 
-    // Endpoint to get gridded occurrences
-    [HttpGet("occurrence/grid")]
+    [HttpGet("gridded-occurrences")]
     public async Task<IActionResult> GetGriddedOccurrences(
-        string precision, string geometry, string redlist = null, string hab = null, string wrims = null)
+        string precision,
+        string geometry,
+        string redlist = null,
+        string hab = null,
+        string wrims = null)
     {
-        var result = await _speciesService.GetGriddedOccurrences(precision, geometry, redlist, hab, wrims);
-        return Ok(result);
+        await _speciesServiceOBIS.SaveGriddedOccurrencesToCsv(
+            precision,
+            geometry,
+            redlist,
+            hab,
+            wrims);
+
+        return Ok("Gridded occurrences saved to CSV");
     }
 
-    // Endpoint to get datasets
-    [HttpGet("dataset")]
-    public async Task<IActionResult> GetDatasets(string nodeId = null, string modifiedSince = null)
+    [HttpGet("datasets")]
+    public async Task<IActionResult> GetDatasets(
+        string nodeId = null,
+        string modifiedSince = null)
     {
-        var result = await _speciesService.GetDatasets(nodeId, modifiedSince);
-        return Ok(result);
+        await _speciesServiceOBIS.SaveDatasetsToCsv(nodeId, modifiedSince);
+
+        return Ok("Datasets saved to CSV");
     }
 
-    // Endpoint to get taxonomy by ID
-    [HttpGet("taxon/{id}")]
-    public async Task<IActionResult> GetTaxonomyById(int id)
+    [HttpGet("taxonomy")]
+    public async Task<IActionResult> GetTaxonomy(
+        string scientificName,
+        string rank = null)
     {
-        var result = await _speciesService.GetTaxonomy(id.ToString(), "id");
-        return Ok(result);
+        await _speciesServiceOBIS.SaveTaxonomyToCsv(scientificName, rank);
+
+        return Ok("Taxonomy saved to CSV");
     }
 
-    // Endpoint to get taxonomy by scientific name
-    [HttpGet("taxon/scientificname/{scientificName}")]
-    public async Task<IActionResult> GetTaxonomyByScientificName(string scientificName)
-    {
-        var result = await _speciesService.GetTaxonomy(scientificName, "scientificname");
-        return Ok(result);
-    }
-
-    // Endpoint to get taxonomy annotations
-    [HttpGet("taxon/annotations")]
-    public async Task<IActionResult> GetTaxonomyAnnotations([FromQuery] string scientificName = "")
-    {
-        var result = await _speciesService.GetTaxonomy(scientificName, "annotations");
-        return Ok(result);
-    }
-
-    // Endpoint to get OBIS nodes
-    [HttpGet("node")]
+    [HttpGet("nodes")]
     public async Task<IActionResult> GetNodes()
     {
-        var result = await _speciesService.GetNodes();
-        return Ok(result);
+        await _speciesServiceOBIS.SaveNodesToCsv();
+
+        return Ok("Nodes saved to CSV");
     }
 
-    // Endpoint to get statistics
     [HttpGet("statistics")]
-    public async Task<IActionResult> GetStatistics(string scientificName = null, string geometry = null, 
-        string startDate = null, string endDate = null)
+    public async Task<IActionResult> GetStatistics(
+        string scientificName = null,
+        string geometry = null,
+        string startDate = null,
+        string endDate = null)
     {
-        var result = await _speciesService.GetStatistics(scientificName, geometry, startDate, endDate);
-        return Ok(result);
+        await _speciesServiceOBIS.SaveStatisticsToCsv(scientificName, geometry, startDate, endDate);
+
+        return Ok("Statistics saved to CSV");
     }
 }
